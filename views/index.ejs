@@ -1,0 +1,23 @@
+<html>
+  <head>
+    <title>Message App</title>
+  </head>
+  <body
+  style="
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 2px;
+">
+    <p>This is the Message Board.</p>
+    <ul>
+        <% messages.forEach((message) => { %>
+            <li>
+            <%=message.user %> - <%=message.text %>
+            <a href="/message?msgId=<%=message.id %>"> <button>Message details</button></a>
+            </li>
+         <% }) %>
+    </ul>
+  </body>
+</html>
