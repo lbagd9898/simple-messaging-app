@@ -5,4 +5,11 @@ async function getAllMessages() {
   return rows;
 }
 
-module.exports = { getAllMessages };
+async function getMsgById(msgId) {
+  const result = await pool.query("SELECT * FROM messages WHERE id = $1", [
+    msgId,
+  ]);
+  return result;
+}
+
+module.exports = { getAllMessages, getMsgById };
