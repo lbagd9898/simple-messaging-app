@@ -1,4 +1,5 @@
 const db = require("../db/queries");
+const { body, validationResult } = require("express-validator");
 
 async function getMsgs(req, res) {
   const msgs = await db.getAllMessages();
@@ -26,7 +27,28 @@ async function getMsgDetails(req, res) {
   }
 }
 
+async function newMsgGet(req, res) {
+  const messages = await db.getAllMessages();
+  res.render("form.ejs", { messages: messages });
+}
+
+const newMsgPost = [
+  body("message").trim().isAlpha().withMessage("must be a string"),
+  async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+      return res.status(400).json({ errors: errors.array() });
+    }
+    const { user, message } = req.body;
+    await db.insertNewMsg(user, message);
+    const msgs = await db.getAllMessages();
+    res.render("index.ejs", { messages: msgs });
+  },
+];
+
 module.exports = {
   getMsgs,
   getMsgDetails,
+  newMsgPost,
+  newMsgGet,
 };
