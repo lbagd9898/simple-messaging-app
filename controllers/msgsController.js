@@ -37,8 +37,8 @@ const newMsgPost = [
   async (req, res) => {
     const errors = validationResult(req);
 
-    const msgs = await db.getAllMessages();
     if (!errors.isEmpty()) {
+      const msgs = await db.getAllMessages();
       return res.render("form.ejs", {
         messages: msgs,
         errors: errors.array(),
@@ -46,6 +46,7 @@ const newMsgPost = [
     }
     const { user, message } = req.body;
     await db.insertNewMsg(user, message);
+    const msgs = await db.getAllMessages();
     res.render("index.ejs", { messages: msgs });
   },
 ];

@@ -1,3 +1,6 @@
+//configure env variables
+require("dotenv").config();
+
 const express = require("express");
 const msgRouter = require("./routes/messageRouter");
 
