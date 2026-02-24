@@ -1,38 +1,155 @@
-<body
-  style="
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 2px;
-  "
->
-  <form
-    style="
-      display: flex;
-      flex-direction: column;
-      align-items: flex-end;
-      justify-content: center;
-      gap: 2px;
-    "
-    method="POST"
-    action="/new"
-  >
-    <div>
-      <label for="user">User: </label>
-      <input name="user" type="text" />
+<html></html>
+  <head>
+    <title>New Message</title>
+
+    <style>
+      /* --- Page --- */
+      body {
+        margin: 0;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+          Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+        background: #f4f7fb;
+        display: flex;
+        flex-direction: column;
+        gap: 2em;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+
+      /* --- Card container --- */
+      .container {
+        background: white;
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+        width: 500px;
+        max-width: 90%;
+      }
+
+      h1 {
+        margin-top: 0;
+        margin-bottom: 1.5rem;
+        text-align: center;
+        color: #2c3e50;
+      }
+
+      /* --- Form --- */
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        margin-bottom: 2rem;
+      }
+
+      .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+      }
+
+      label {
+        font-size: 13px;
+        color: #7a869a;
+      }
+
+      input {
+        padding: 10px;
+        border-radius: 6px;
+        border: 1px solid #dbe1ea;
+        font-size: 14px;
+        transition: border 0.2s ease, box-shadow 0.2s ease;
+      }
+
+      input:focus {
+        outline: none;
+        border-color: #4f8cff;
+        box-shadow: 0 0 0 2px rgba(79, 140, 255, 0.15);
+      }
+
+      /* --- Button --- */
+      button {
+        background: #4f8cff;
+        color: white;
+        border: none;
+        padding: 10px;
+        border-radius: 6px;
+        font-size: 14px;
+        cursor: pointer;
+        transition: all 0.2s ease;
+      }
+
+      button:hover {
+        background: #3a73d9;
+        transform: translateY(-1px);
+      }
+
+      /* --- Messages preview --- */
+      ul {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      li {
+        background: #f9fafc;
+        border: 1px solid #e6eaf0;
+        border-radius: 8px;
+        padding: 10px 14px;
+        color: #34495e;
+      }
+
+      .user {
+        font-weight: 600;
+        color: #2c3e50;
+      }
+
+      .alert {
+        background: #ffe3e3;
+        color: #b42318;
+        padding: 10px 14px;
+        border-radius: 8px;
+        margin-bottom: 1rem;
+        border: 1px solid #ffc9c9;
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="container">
+      <h1>New Message</h1>
+
+      <form method="POST" action="/new">
+        <div class="form-group">
+          <label for="user">User</label>
+          <input name="user" type="text" required />
+        </div>
+
+        <div class="form-group">
+          <label for="message">Message</label>
+          <input name="message" type="text" required />
+        </div>
+
+        <button type="submit">Submit Message</button>
+      </form>
+
+      <ul>
+        <% messages.forEach((message) => { %>
+          <li>
+            <span class="user"><%= message.user %></span> —
+            <%= message.text %>
+          </li>
+        <% }) %>
+      </ul>
     </div>
-    <div>
-      <label for="message">Message: </label>
-      <input name="message" type="text" />
-    </div>
-    <button type="submit">Submit</button>
-  </form>
-  <ul>Messages:
-  <% messages.forEach((message) => { %>
-    <li>
-    <%=message.user %> : <%=message.text %>
-    </li>
-  <% }) %>
-  </ul>
-</body>
+    <a href="/"><button>Back to board</button></a>
+    <% if (typeof errors !== 'undefined' && errors.length > 0) { %>
+      <div class="alert">
+        <%= errors[0].msg %>
+      </div>
+    <% } %>
+  </body>
+</html>

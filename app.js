@@ -10,5 +10,5 @@ app.use("/", msgRouter);
 const PORT = 3000;
 
 app.listen(PORT, () => {
-  console.log("port connected");
+  console.log(`port connected on port ${PORT}`);
 });

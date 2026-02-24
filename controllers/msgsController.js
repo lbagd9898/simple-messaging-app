@@ -33,15 +33,19 @@ async function newMsgGet(req, res) {
 }
 
 const newMsgPost = [
-  body("message").trim().isAlpha().withMessage("must be a string"),
+  body("message").trim().isAlpha().withMessage("Message must be a string"),
   async (req, res) => {
     const errors = validationResult(req);
+
+    const msgs = await db.getAllMessages();
     if (!errors.isEmpty()) {
-      return res.status(400).json({ errors: errors.array() });
+      return res.render("form.ejs", {
+        messages: msgs,
+        errors: errors.array(),
+      });
     }
     const { user, message } = req.body;
     await db.insertNewMsg(user, message);
-    const msgs = await db.getAllMessages();
     res.render("index.ejs", { messages: msgs });
   },
 ];

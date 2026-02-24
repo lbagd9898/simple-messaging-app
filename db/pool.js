@@ -6,6 +6,6 @@ module.exports = new Pool({
   host: "localhost", // or wherever the db is hosted
   user: "lydia",
   database: "messages",
-  password: "Zeta1313!",
+  password: "Zeta1313",
   port: 5432, // The default port
 });
