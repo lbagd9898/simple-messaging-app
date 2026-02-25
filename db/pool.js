@@ -31,6 +31,7 @@ async function initializeDatabase() {
         sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
+    console.log("database created.");
   } catch (err) {
     console.error("Database initialization failed:", err);
   }
