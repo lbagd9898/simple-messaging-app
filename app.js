@@ -1,5 +1,6 @@
-//configure env variables
-require("dotenv").config();
+if (process.env.NODE_ENV !== "production") {
+  require("dotenv").config();
+}
 
 const express = require("express");
 const msgRouter = require("./routes/messageRouter");
@@ -10,8 +11,8 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({ extended: true }));
 app.use("/", msgRouter);
 
-const PORT = 3000;
+if (process.env.NODE_ENV === "production") {
+  app.set("view cache", true);
+}
 
-app.listen(PORT, () => {
-  console.log(`port connected on port ${PORT}`);
-});
+module.exports = app;
