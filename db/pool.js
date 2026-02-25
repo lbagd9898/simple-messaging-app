@@ -26,9 +26,9 @@ async function initializeDatabase() {
     await pool.query(`
       CREATE TABLE IF NOT EXISTS messages (
         id SERIAL PRIMARY KEY,
-        username TEXT NOT NULL,
-        message TEXT NOT NULL,
-        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        text TEXT NOT NULL,
+        user TEXT NOT NULL,
+        sent_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
     `);
   } catch (err) {
